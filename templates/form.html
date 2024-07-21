@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+            margin-top: 6px;
+            font-size: 16px;
+        }
+
+        input[type="text"]:focus {
+            border-color: #66afe9;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            background-color: #ff5f5f;
+            color: #fff;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #ff3f3f;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <form action="{{ url_for('predict_datapoint') }}" method="POST">
+            <div class="form-group">
+                <label for="radius_mean">Radius Mean:</label>
+                <input type="text" id="radius_mean" name="radius_mean" placeholder="Enter radius mean value (float)">
+            </div>
+            <div class="form-group">
+                <label for="texture_mean">Texture Mean:</label>
+                <input type="text" id="texture_mean" name="texture_mean" placeholder="Enter texture mean value (float)">
+            </div>
+            <div class="form-group">
+                <label for="perimeter_mean">Perimeter Mean:</label>
+                <input type="text" id="perimeter_mean" name="perimeter_mean" placeholder="Enter perimeter mean value (float)">
+            </div>
+            <div class="form-group">
+                <label for="area_mean">Area Mean:</label>
+                <input type="text" id="area_mean" name="area_mean" placeholder="Enter area mean value (float)">
+            </div>
+            <div class="form-group">
+                <label for="smoothness_mean">Smoothness Mean:</label>
+                <input type="text" id="smoothness_mean" name="smoothness_mean" placeholder="Enter smoothness mean value (float)">
+            </div>
+            <div class="form-group">
+                <label for="compactness_mean">Compactness Mean:</label>
+                <input type="text" id="compactness_mean" name="compactness_mean" placeholder="Enter compactness mean value (float)">
+            </div>
+            <div class="form-group">
+                <label for="concavity_mean">Concavity Mean:</label>
+                <input type="text" id="concavity_mean" name="concavity_mean" placeholder="Enter concavity mean value (float)">
+            </div>
+            <div class="form-group">
+                <label for="concave_points_mean">Concave Points Mean:</label>
+                <input type="text" id="concave_points_mean" name="concave_points_mean" placeholder="Enter concave points mean value (float)">
+            </div>
+            <div class="form-group">
+                <label for="symmetry_mean">Symmetry Mean:</label>
+                <input type="text" id="symmetry_mean" name="symmetry_mean" placeholder="Enter symmetry mean value (float)">
+            </div>
+            <div class="form-group">
+                <label for="fractal_dimension_mean">Fractal Dimension Mean:</label>
+                <input type="text" id="fractal_dimension_mean" name="fractal_dimension_mean" placeholder="Enter fractal dimension mean value (float)">
+            </div>
+            <div class="form-group">
+                <label for="radius_se">Radius SE:</label>
+                <input type="text" id="radius_se" name="radius_se" placeholder="Enter radius SE value (float)">
+            </div>
+            <div class="form-group">
+                <label for="texture_se">Texture SE:</label>
+                <input type="text" id="texture_se" name="texture_se" placeholder="Enter texture SE value (float)">
+            </div>
+            <div class="form-group">
+                <label for="perimeter_se">Perimeter SE:</label>
+                <input type="text" id="perimeter_se" name="perimeter_se" placeholder="Enter perimeter SE value (float)">
+            </div>
+            <div class="form-group">
+                <label for="area_se">Area SE:</label>
+                <input type="text" id="area_se" name="area_se" placeholder="Enter area SE value (float)">
+            </div>
+            <div class="form-group">
+                <label for="smoothness_se">Smoothness SE:</label>
+                <input type="text" id="smoothness_se" name="smoothness_se" placeholder="Enter smoothness SE value (float)">
+            </div>
+            <div class="form-group">
+                <label for="compactness_se">Compactness SE:</label>
+                <input type="text" id="compactness_se" name="compactness_se" placeholder="Enter compactness SE value (float)">
+            </div>
+            <div class="form-group">
+                <label for="concavity_se">Concavity SE:</label>
+                <input type="text" id="concavity_se" name="concavity_se" placeholder="Enter concavity SE value (float)">
+            </div>
+            <div class="form-group">
+                <label for="concave_points_se">Concave Points SE:</label>
+                <input type="text" id="concave_points_se" name="concave_points_se" placeholder="Enter concave points SE value (float)">
+            </div>
+            <div class="form-group">
+                <label for="symmetry_se">Symmetry SE:</label>
+                <input type="text" id="symmetry_se" name="symmetry_se" placeholder="Enter symmetry SE value (float)">
+            </div>
+            <div class="form-group">
+                <label for="fractal_dimension_se">Fractal Dimension SE:</label>
+                <input type="text" id="fractal_dimension_se" name="fractal_dimension_se" placeholder="Enter fractal dimension SE value (float)">
+            </div>
+            <div class="form-group">
+                <label for="radius_worst">Radius Worst:</label>
+                <input type="text" id="radius_worst" name="radius_worst" placeholder="Enter radius worst value (float)">
+            </div>
+            <div class="form-group">
+                <label for="texture_worst">Texture Worst:</label>
+                <input type="text" id="texture_worst" name="texture_worst" placeholder="Enter texture worst value (float)">
+            </div>
+            <div class="form-group">
+                <label for="perimeter_worst">Perimeter Worst:</label>
+                <input type="text" id="perimeter_worst" name="perimeter_worst" placeholder="Enter perimeter worst value (float)">
+            </div>
+            <div class="form-group">
+                <label for="area_worst">Area Worst:</label>
+                <input type="text" id="area_worst" name="area_worst" placeholder="Enter area worst value (float)">
+            </div>
+            <div class="form-group">
+                <label for="smoothness_worst">Smoothness Worst:</label>
+                <input type="text" id="smoothness_worst" name="smoothness_worst" placeholder="Enter smoothness worst value (float)">
+            </div>
+            <div class="form-group">
+                <label for="compactness_worst">Compactness Worst:</label>
+                <input type="text" id="compactness_worst" name="compactness_worst" placeholder="Enter compactness worst value (float)">
+            </div>
+            <div class="form-group">
+                <label for="concavity_worst">Concavity Worst:</label>
+                <input type="text" id="concavity_worst" name="concavity_worst" placeholder="Enter concavity worst value (float)">
+            </div>
+            <div class="form-group">
+                <label for="concave_points_worst">Concave Points Worst:</label>
+                <input type="text" id="concave_points_worst" name="concave_points_worst" placeholder="Enter concave points worst value (float)">
+            </div>
+            <div class="form-group">
+                <label for="symmetry_worst">Symmetry Worst:</label>
+                <input type="text" id="symmetry_worst" name="symmetry_worst" placeholder="Enter symmetry worst value (float)">
+            </div>
+            <div class="form-group">
+                <label for="fractal_dimension_worst">Fractal Dimension Worst:</label>
+                <input type="text" id="fractal_dimension_worst" name="fractal_dimension_worst" placeholder="Enter fractal dimension worst value (float)">
+            </div>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+</body>
+
+</html>
